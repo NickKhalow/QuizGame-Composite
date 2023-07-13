@@ -1,17 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using QuizGame.Contents;
+using QuizGame.Results;
 
 namespace QuizGame
 {
     public class SimpleQuiz : IQuiz
     {
-        private readonly string correctAnswer;
-        private readonly IReadOnlyList<string> fakeAnswers;
+        private readonly IQuizContent content;
 
-        public string Question { get; }
+        public string Question => content.Question;
 
-        public IReadOnlyList<string> Answers => fakeAnswers.Append(correctAnswer).ToList();
+        public IReadOnlyList<string> Answers => content.FakeAnswers.Append(content.CorrectAnswer).ToList();
 
         public SimpleQuiz((string question, string correctAnswer, IReadOnlyList<string> fakeAnswers) bundle) : this(
             bundle.question,
@@ -21,19 +22,25 @@ namespace QuizGame
         {
         }
 
-        public SimpleQuiz(string question, string correctAnswer, IReadOnlyList<string> fakeAnswers)
+        public SimpleQuiz(string question, string correctAnswer, IReadOnlyList<string> fakeAnswers) : this(
+            new ConstQuizContent(question, correctAnswer, fakeAnswers)
+        )
         {
-            Question = question;
-            this.correctAnswer = correctAnswer;
-            this.fakeAnswers = fakeAnswers;
         }
 
-        public bool Answer(string answer)
+        public SimpleQuiz(IQuizContent content)
         {
-            return correctAnswer.Equals(
+            this.content = content;
+        }
+
+        public AnswerResult Answer(string answer)
+        {
+            return content.CorrectAnswer.Equals(
                 answer,
                 StringComparison.OrdinalIgnoreCase
-            );
+            )
+                ? AnswerResult.correct as AnswerResult
+                : new AnswerResult.Incorrect(answer);
         }
     }
 }

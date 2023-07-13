@@ -1,33 +1,38 @@
 using System.Collections.Generic;
+using QuizGame.Attempts;
+using QuizGame.Results;
 
 namespace QuizGame
 {
     public class AttemptsQuiz : IQuiz
     {
         private readonly IQuiz origin;
-        private readonly int max;
-        private int current = 0;
+        private readonly IAttempts attempts;
 
-        public AttemptsQuiz(IQuiz origin, int max = 5)
+        public AttemptsQuiz(IQuiz origin, int max = 5) : this(origin, new SimpleAttempts(max))
+        {
+        }
+
+        public AttemptsQuiz(IQuiz origin, IAttempts attempts)
         {
             this.origin = origin;
-            this.max = max;
+            this.attempts = attempts;
         }
 
         public string Question => origin.Question;
         public IReadOnlyList<string> Answers => origin.Answers;
 
-        public bool Answer(string answer)
+        public AnswerResult Answer(string answer)
         {
-            if (current >= max)
+            if (attempts.Over)
             {
-                return false;
+                return new AnswerResult.AttemptOut();
             }
 
             var result = origin.Answer(answer);
-            if (result == false)
+            if (result is AnswerResult.Correct == false)
             {
-                current++;
+                attempts.Use();
             }
 
             return result;

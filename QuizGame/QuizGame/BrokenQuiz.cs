@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using QuizGame.Results;
 
 namespace QuizGame
 {
@@ -17,13 +18,15 @@ namespace QuizGame
             Answers = answers;
         }
 
-        public bool Answer(string answer)
+        public AnswerResult Answer(string answer)
         {
             return Answers.Any(e => e.Equals(
                     answer,
                     StringComparison.OrdinalIgnoreCase
                 )
-            );
+            )
+                ? AnswerResult.correct as AnswerResult
+                : new AnswerResult.Incorrect(answer);
         }
     }
 }

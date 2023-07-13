@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using QuizGame.Results;
 
 namespace QuizGame
 {
@@ -43,7 +44,7 @@ namespace QuizGame
             }
         }
 
-        public bool Answer(string answer)
+        public AnswerResult Answer(string answer)
         {
             return origin.Answer(answer);
         }

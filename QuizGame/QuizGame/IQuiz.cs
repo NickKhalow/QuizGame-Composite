@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using QuizGame.Results;
 
 namespace QuizGame
 {
@@ -8,6 +9,6 @@ namespace QuizGame
 
         IReadOnlyList<string> Answers { get; }
 
-        bool Answer(string answer);
+        AnswerResult Answer(string answer);
     }
 }

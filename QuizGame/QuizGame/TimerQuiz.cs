@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using QuizGame.Results;
 using QuizGame.Timers;
 
 namespace QuizGame
@@ -17,15 +18,15 @@ namespace QuizGame
         public string Question => origin.Question;
         public IReadOnlyList<string> Answers => origin.Answers;
 
-        public bool Answer(string answer)
+        public AnswerResult Answer(string answer)
         {
             if (timer.Over)
             {
-                return false;
+                return new AnswerResult.TimeOut();
             }
 
             var result = origin.Answer(answer);
-            if (result)
+            if (result is AnswerResult.Correct)
             {
                 timer.RewardTime();
             }
