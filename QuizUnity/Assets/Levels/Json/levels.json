@@ -1,0 +1,30 @@
+[
+    {
+        "Question": "Who bites the dust",
+        "CorrectAnswer": "another one",
+        "FakeAnswers": [
+            "a",
+            "b",
+            "c"
+        ]
+    },
+    {
+        "Question": "Which color similar to blue",
+        "CorrectAnswer": "dark blue",
+        "FakeAnswers": [
+            "a",
+            "B',
+            "c"
+        ]
+    }
+    {
+        "Question": "First letter of alphabet",
+        "CorrectAnswer": "a",
+        "FakeAnswers": [
+            "b",
+            "s",
+            "g",
+            "y"
+        ]
+    }
+]

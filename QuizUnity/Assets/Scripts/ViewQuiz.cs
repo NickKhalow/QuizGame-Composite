@@ -1,16 +1,17 @@
-using System;
-using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Attempts;
 using QuizGame;
 using QuizGame.Contents;
+using QuizGame.Results;
 using Timers;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ViewQuiz : MonoBehaviour
 {
-    [SerializeField] private Content content;
+    public UnityEvent onWin = new();
 
     [Header("Dependencies")] [SerializeField]
     private TMP_Text questionText;
@@ -20,8 +21,12 @@ public class ViewQuiz : MonoBehaviour
     [SerializeField] private AbstractTimer timer;
     [SerializeField] private AbstractAttempts attempts;
 
-    private void Awake()
+    [SuppressMessage("ReSharper", "ParameterHidesMember")]
+    public void Construct(AbstractTimer timer, AbstractAttempts attempts)
     {
+        this.timer = timer;
+        this.attempts = attempts;
+        
         questionText.EnsureNotNull("question text is null");
         prefab.EnsureNotNull("answer button prefab is null");
         answerButtonsLayout.EnsureNotNull("answer button layout is null");
@@ -29,7 +34,7 @@ public class ViewQuiz : MonoBehaviour
         attempts.EnsureNotNull("attempts is null");
     }
 
-    private void Start()
+    public void Play(IQuizContent content)
     {
         IQuiz quiz = new AttemptsQuiz(
             new TimerQuiz(
@@ -43,7 +48,16 @@ public class ViewQuiz : MonoBehaviour
         questionText.SetText(quiz.Question);
         foreach (var button in quiz.Answers.Select(NewButton)) // string[] -> AnswerButton[]
         {
-            button.clicked.AddListener(e => Debug.Log($"Answer {e} is {quiz.Answer(e).GetType().Name}"));
+            button.clicked.AddListener(e =>
+                {
+                    var result = quiz.Answer(e);
+                    Debug.Log($"Answer {e} is {result.GetType().Name}");
+                    if (result is AnswerResult.Correct)
+                    {
+                        onWin?.Invoke();
+                    }
+                }
+            );
         }
     }
 
@@ -52,17 +66,5 @@ public class ViewQuiz : MonoBehaviour
         var button = Instantiate(prefab, answerButtonsLayout);
         button.Construct(answer);
         return button;
-    }
-
-    [Serializable]
-    public struct Content : IQuizContent
-    {
-        [SerializeField] private string question;
-        [SerializeField] private string correct;
-        [SerializeField] private string[] fakes;
-
-        public string Question => question;
-        public string CorrectAnswer => correct;
-        public IReadOnlyList<string> FakeAnswers => fakes;
     }
 }
