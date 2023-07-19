@@ -772,6 +772,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7931699306663581423, guid: e5ec143b390284509846039eeaaad06c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7931699306663581423, guid: e5ec143b390284509846039eeaaad06c, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -782,10 +786,6 @@ PrefabInstance:
     - target: {fileID: 7931699306663581423, guid: e5ec143b390284509846039eeaaad06c, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7931699306663581423, guid: e5ec143b390284509846039eeaaad06c, type: 3}
-      propertyPath: m_LocalRptation.w
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7931699306663581423, guid: e5ec143b390284509846039eeaaad06c, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1393,7 +1393,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2081970997}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1413,8 +1413,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ce928af6a7074a6bb97011fbf6316f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  compileFactory: {fileID: 11400000, guid: 2030e2a9f75bb480da71401a71fef055, type: 2}
-  path: /Users/courses/RiderProjects/Quiz/QuizUnity/Builds/ViaScript.apk
+  compileFactory: {fileID: 11400000, guid: f83bc58578f3446a1998299e0ce90a50, type: 2}
+  path: hello there!
 --- !u!1 &2107630035
 GameObject:
   m_ObjectHideFlags: 0
